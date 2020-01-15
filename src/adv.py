@@ -83,32 +83,45 @@ while (not gameOver):
         continue
 
     if (player.room_name == "Outside Cave Entrance"): 
-        # you can only go north when outside, so user must enter [n]
-
+        # outside 
+       
         if (user_input != 'n'):
+            # player can only go north when outside, so user must enter [n]
             print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
             continue 
         else:
             player.room_name = room['outside'].n_to.room_name
-            player.desc = room['outside'].n_to.room_name
+            player.desc = room['outside'].n_to.desc
 
-    # elif (player.room_name == "Foyer"):
+    elif (player.room_name == "Foyer"):
+        # foyer 
 
-    #     if (user_input == 'w'):
-    #         print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
-    #         continue 
-    #     elif (user_input == 's'):
-    #         player.room = room['foyer'].s_to
-            
-    #     else if (user_input == 'n'):
-    #         player.room = room['foyer'].n_to 
-           
-    #     else if (user_input == 'e'):
-    #         player.room = room['foyer'].e_to 
-           
+        if (user_input == 'w'):
+            # player cannot travel west from the foyer 
+            print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
+            continue 
+        elif (user_input == 's'):
+            player.room_name = room['foyer'].s_to.room_name
+            player.desc = room['foyer'].s_to.desc
+        elif (user_input == 'n'):
+            player.room_name = room['foyer'].n_to.room_name
+            player.desc = room['foyer'].n_to.desc
+        elif (user_input == 'e'):
+            player.room_name = room['foyer'].e_to.room_name
+            player.desc = room['foyer'].e_to.desc
 
-    # else if (player.room == "Grand Overlook"):
-    # else if (player.room == "Narrow Passage"):
-    # else if (player.room == "Treasure Chamber"):
+    elif (player.room_name == "Grand Overlook"):
+        # overlook 
+        
+        if (user_input != 's'):
+            # player can only go south when at overlook, so user must enter [s]
+            print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
+            continue 
+        else:
+            player.room_name = room['overlook'].s_to.room_name
+            player.desc = room['overlook'].s_to.desc
+
+    # elif (player.room_name == "Narrow Passage"):
+    # elif (player.room_name == "Treasure Chamber"):
 
     print(f"{player}")
