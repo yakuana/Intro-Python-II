@@ -8,4 +8,4 @@ class Player(Room):
         super().__init__(room_name, desc)
         self.name = name
     def __str__(self):
-        return f"{self.name} is in room {self.room_name}"
+        return f"{self.name} is located {self.room_name} \nRoom description: {self.desc}"
