@@ -38,10 +38,14 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+print("-" * 30)
+print("Welcome to the Adventure Game!")
+print("-" * 30)
+
 # Make a new player object that is currently in the 'outside' room.
 
 player = Player("John", room['outside'].room_name, room['outside'].desc)
-print(f"{player}")
+print(f"\n{player}")
 
 # Write a loop that:
 #
@@ -58,22 +62,6 @@ gameOver = False
 
 while (not gameOver):
     user_input = input("\nWhere would you like to go? \n[n] North [e] East [s] South [w] West [q] Quit: ")
-
-    # switch(player1.room.room_name) {
-    #     case "Outside Cave Entrance": 
-    #         user_input = input("Where would you like to go? \n[n] North [e] East [s] South [w] West") 
-    #         while (user_input != 'n'):
-    #             print(f"Looks like you cannot go [{user_input}]. Pick a different direction to travel.")
-    #             user_input = input("Where would you like to go? \n[n] North [e] East [s] South [w] West") 
-    #         player1.room = room['outside'].n_to
-    #         gameOver = True
-    #         break 
-    # }
-
-    # if (user_input == 'n'):
-    #     else if (user_input == 'e'):
-    #     else if (user_input == 's'):
-    #     else if (user_input == 'w'):
 
     if (user_input == "q"):
         print("Thanks for playing the Adventure Game!\n")
@@ -121,7 +109,29 @@ while (not gameOver):
             player.room_name = room['overlook'].s_to.room_name
             player.desc = room['overlook'].s_to.desc
 
-    # elif (player.room_name == "Narrow Passage"):
-    # elif (player.room_name == "Treasure Chamber"):
+    elif (player.room_name == "Narrow Passage"):
+        # narrow 
 
-    print(f"{player}")
+        if (user_input == 's' or user_input == 'e'):
+            # player cannot travel south or east from the narrow passage  
+            print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
+            continue 
+        elif (user_input == 'n'):
+            player.room_name = room['narrow'].n_to.room_name
+            player.desc = room['narrow'].n_to.desc
+        elif (user_input == 'w'):
+            player.room_name = room['narrow'].w_to.room_name
+            player.desc = room['narrow'].w_to.desc
+
+    elif (player.room_name == "Treasure Chamber"):
+        # treasure 
+        
+        if (user_input != 's'):
+            # player can only go south when at tresure, so user must enter [s]
+            print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
+            continue 
+        else:
+            player.room_name = room['treasure'].s_to.room_name
+            player.desc = rroom['treasure'].s_to.desc
+
+    print(f"\n{player}")
