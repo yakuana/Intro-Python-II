@@ -1,26 +1,82 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+    'outside':  Room(
+        "Outside Cave Entrance",
+        "North of you, the cave mount beckons", 
+        [
+            Item("backpack", "Something to hold your treasure"), 
+            Item("shades", "Protect your eyes from harmful rays")
+        ]),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer':    Room(
+        "Foyer", 
+        """Dim light filters in from the south. Dusty passages run north and east.""", 
+        [
+            Item("match", "Just one. Don't lose it."), 
+            Item("book", "Something to read or not to read."), 
+            Item("knife", "It's sharp. It's pointy. Be careful.")
+        ]),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'overlook': Room(
+        "Grand Overlook",
+        """A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm.""", 
+        [
+            Item("rope", "Looks like the mice beat you to this one. Looks more like a thread than a rope."), 
+            Item("mirror", "You look great!")
+        ]),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow':   Room(
+        "Narrow Passage", 
+        """The narrow passage bends here from west to north. The smell of gold permeates the air.""", 
+        [
+            Item("bottle", "There seems to be a mystery liquid at the bottom. It's blue... or purple, maybe red? Definitely orange!"), 
+            Item("lighter", "*flick* *flick* That's hot!")
+        ]),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+    'treasure': Room(
+        "Treasure Chamber", 
+        """You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south.""", 
+        [
+            Item("note", "The Earth is flat I tell ya! In 1684 I asked the moon and the moon said the dandiest of things. For starters, the Earth is indeed FLAT and spheres are alien propaganda for their inevitable regime. Don't believe me? Keep reading...")
+        ]),
 }
+
+# Item Arrays 
+
+""" outside 
+[
+    Item("backpack", "Something to hold your treasure"), 
+    Item("shades", "protect your eyes from harmful rays")
+]
+
+foyer 
+[
+    Item("match", "Just one. Don't lose it."), 
+    Item("book", "Something to read or not to read."), 
+    Item("knife", "It's sharp. It's pointy. Be careful.")
+]
+
+overlook 
+[
+    Item("rope", "Looks like the mice beat you to this one. Looks more like a thread than a rope."), 
+    Item("mirror", "You look great!")
+]
+
+narrow 
+[
+    Item("bottle", "There seems to be a mystery liquid at the bottom. It's blue... or purple, maybe red? Definitely orange!"), 
+    Item("lighter", "*flick* *flick* That's hot!")
+]
+
+treasure 
+[
+    Item("note", "The Earth is flat I tell ya! In 1684 I asked the moon and the moon said the dandiest of things. For starters, the Earth is indeed FLAT and spheres are alien propaganda for their inevitable regime. Don't believe me? Keep reading...")
+] """
 
 
 # Link rooms together
@@ -44,7 +100,11 @@ print("-" * 30)
 
 # Make a new player object that is currently in the 'outside' room.
 
-player = Player("John", room['outside'].room_name, room['outside'].desc)
+player = Player("John", room['outside'].room_name, room['outside'].desc, room['outside'].items)
+
+# testing items 
+for prize in player.items:
+    print(prize.item_name, prize.item_desc)
 print(f"\n{player}")
 
 # Write a loop that:
