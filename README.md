@@ -59,7 +59,7 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
   * This will be the _base class_ for specialized item types to be declared
     later.
 
-* Add the ability to add items to rooms.
+* [x] Add the ability to add items to rooms.
 
   * The `Room` class should be extended with a `list` that holds the `Item`s
     that are currently in that room.
@@ -67,11 +67,11 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
   * Add functionality to the main loop that prints out all the items that are
     visible to the player when they are in that room.
 
-* Add capability to add `Item`s to the player's inventory. The inventory can
+* [x] Add capability to add `Item`s to the player's inventory. The inventory can
   also be a `list` of items "in" the player, similar to how `Item`s can be in a
   `Room`.
 
-* Add a new type of sentence the parser can understand: two words.
+* [x] Add a new type of sentence the parser can understand: two words.
 
   * Until now, the parser could just understand one sentence form:
 
@@ -88,7 +88,7 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
   * Split the entered command and see if it has 1 or 2 words in it to determine
     if it's the first or second form.
 
-* Implement support for the verb `get` followed by an `Item` name. This will be
+* [x] Implement support for the verb `get` followed by an `Item` name. This will be
   used to pick up `Item`s.
 
   * If the user enters `get` or `take` followed by an `Item` name, look at the
@@ -109,10 +109,10 @@ The `/src` directory contains the files `adv.py`, which is where the main logic 
 
      * Add an `on_drop` method to `Item`. Implement it similar to `on_take`.
 
-* Implement support for the verb `drop` followed by an `Item` name. This is the
+* [x] Implement support for the verb `drop` followed by an `Item` name. This is the
   opposite of `get`/`take`.
 
-* Add the `i` and `inventory` commands that both show a list of items currently
+* [x] Add the `i` and `inventory` commands that both show a list of items currently
   carried by the player.
 
 

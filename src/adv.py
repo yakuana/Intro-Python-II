@@ -46,7 +46,7 @@ room = {
         ]),
 }
 
-# Item Arrays 
+# Item arrays initial content 
 
 """ outside 
 [
@@ -103,14 +103,9 @@ print("-" * 30)
 player = Player("John", room['outside'].room_name)
 
 print(f"\n{player}")
-print("You do not have any items currently.") 
+player.print_items()
 print(f"\n{room['outside']}")
-print(f"\n{player.current_room} has the following items:")
-for item in room['outside'].room_items: 
-    print(item)
 
-location = 'outside'
-# add_item = input("\n Would you like to take an item from this room? If yes, type the name of that item. ")
 
 # Write a loop that:
 #
@@ -123,78 +118,117 @@ location = 'outside'
 #
 # If the user enters "q", quit the game.
 
-gameOver = False
+while (True):
 
-while (not gameOver):
-    user_input = input("\nWhere would you like to go? \n[n] North [e] East [s] South [w] West [q] Quit: ")
+    # user direction input 
+    user_dir = input("\nWhere would you like to go? \n[n] North [e] East [s] South [w] West [q] Quit: ")
 
-    if (user_input == "q"):
+    if (user_dir == "q"):
         print("Thanks for playing the Adventure Game!\n")
         break
-    elif (user_input not in ['n', 'e', 's', 'w']):
+    elif (user_dir not in ['n', 'e', 's', 'w']):
         print("\nPlease enter a valid direction to travel.") 
         continue
 
     if (player.current_room == "Outside Cave Entrance"): 
        
-        if (user_input != 'n'):
+        if (user_dir != 'n'):
             # player can only go north when outside, so user must enter [n]
-            print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
+            print(f"\nLooks like you cannot travel [{user_dir}]. Try a different direction.")
             continue 
         else:
             player.current_room = room['outside'].n_to.room_name
             
     elif (player.current_room == "Foyer"):
 
-        if (user_input == 'w'):
+        if (user_dir == 'w'):
             # player cannot travel west from the foyer 
-            print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
+            print(f"\nLooks like you cannot travel [{user_dir}]. Try a different direction.")
             continue 
-        elif (user_input == 's'):
+        elif (user_dir == 's'):
             player.current_room = room['foyer'].s_to.room_name 
-        elif (user_input == 'n'):
+        elif (user_dir == 'n'):
             player.current_room = room['foyer'].n_to.room_name
-        elif (user_input == 'e'):
+        elif (user_dir == 'e'):
             player.current_room = room['foyer'].e_to.room_name
 
     elif (player.current_room == "Grand Overlook"):
         
-        if (user_input != 's'):
+        if (user_dir != 's'):
             # player can only go south when at overlook, so user must enter [s]
-            print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
+            print(f"\nLooks like you cannot travel [{user_dir}]. Try a different direction.")
             continue 
         else:
             player.current_room = room['overlook'].s_to.room_name
 
     elif (player.current_room == "Narrow Passage"):
 
-        if (user_input == 's' or user_input == 'e'):
+        if (user_dir == 's' or user_dir == 'e'):
             # player cannot travel south or east from the narrow passage  
-            print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
+            print(f"\nLooks like you cannot travel [{user_dir}]. Try a different direction.")
             continue 
-        elif (user_input == 'n'):
+        elif (user_dir == 'n'):
             player.current_room = room['narrow'].n_to.room_name
-        elif (user_input == 'w'):
+        elif (user_dir == 'w'):
             player.current_room = room['narrow'].w_to.room_name
 
     elif (player.current_room == "Treasure Chamber"):
-        # treasure 
-        
-        if (user_input != 's'):
+
+        if (user_dir != 's'):
             # player can only go south when at tresure, so user must enter [s]
-            print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
+            print(f"\nLooks like you cannot travel [{user_dir}]. Try a different direction.")
             continue 
         else:
             player.current_room = room['treasure'].s_to.room_name
         
     print(f"\n{player}")
 
-    # prints the room description for the player based on the player's current room name 
+    '''
+        Matches the player's room to a room in the room object using keys. 
+        Gives the player an opportunity to acquire an item from that room. 
+        Informs the player of the items they now have. 
+    '''
     for key in room: 
         if key in player.current_room.lower():
-            print(f"\n{room[key]}")
             print(f"\n{player.current_room} has the following items:")
 
             # prints the items in the room 
             for item in room[key].room_items: 
                 print(item)
+            
+            # user items acquiration 
+            user_item = input("\nWould you like to take an item from this room? \nIf yes, type [get] followed by the name of the item. \nIf you would like to leave an item, type [drop] followed by the item name. \nIf neither, type [no].\n")
+
+            if ("no" not in user_item): 
+                
+                # will determine whether the user successfully added or removed an item 
+                successful = False
+
+                # make items list 
+                user_item = user_item.split()
+
+                for item in room[key].room_items: 
+                    if (user_item[0] == "get" and user_item[1] == item.item_name): 
+                        player.add_item(item)
+                        room[key].remove_item(item)
+                        item.on_take()
+                        successful = True 
+                    elif (user_item[0] == "drop"): 
+                        for obj in player.items: 
+                            if (obj.item_name == user_item[1]):
+                                player.remove_item(obj)
+                                room[key].add_item(obj)
+                                obj.on_drop()
+                                successful = True 
+            
+                if (not successful):
+                    print("I'm sorry, an error has occured. You have lost your opportunity to steal and must move on.")
+                
+                # inventory check option
+                inventory = input("\nWould you like to view your inventory? \nIf yes, type [i]. \nIf no, type [no].\n")
+
+                if (inventory == "i"):
+                    player.print_items()
+
+            # prints player's current room description 
+            print(f"\n{room[key]}")
