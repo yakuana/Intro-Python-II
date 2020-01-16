@@ -3,9 +3,10 @@
 
 from room import Room 
 
-class Player(Room):
-    def __init__(self, name, room_name, desc, items):
-        super().__init__(room_name, desc, items)
+class Player():
+    def __init__(self, name, current_room, items=None):
         self.name = name
+        self.current_room = current_room
+        self.items = items 
     def __str__(self):
-        return f"{self.name} is located {self.room_name} \nRoom description: \n{self.desc}"
+        return f"{self.name}'s location is {self.current_room}."

@@ -100,12 +100,17 @@ print("-" * 30)
 
 # Make a new player object that is currently in the 'outside' room.
 
-player = Player("John", room['outside'].room_name, room['outside'].desc, room['outside'].items)
+player = Player("John", room['outside'].room_name)
 
-# testing items 
-for prize in player.items:
-    print(prize.item_name, prize.item_desc)
 print(f"\n{player}")
+print("You do not have any items currently.") 
+print(f"\n{room['outside']}")
+print(f"\n{player.current_room} has the following items:")
+for item in room['outside'].room_items: 
+    print(item)
+
+location = 'outside'
+# add_item = input("\n Would you like to take an item from this room? If yes, type the name of that item. ")
 
 # Write a loop that:
 #
@@ -130,60 +135,49 @@ while (not gameOver):
         print("\nPlease enter a valid direction to travel.") 
         continue
 
-    if (player.room_name == "Outside Cave Entrance"): 
-        # outside 
+    if (player.current_room == "Outside Cave Entrance"): 
        
         if (user_input != 'n'):
             # player can only go north when outside, so user must enter [n]
             print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
             continue 
         else:
-            player.room_name = room['outside'].n_to.room_name
-            player.desc = room['outside'].n_to.desc
-
-    elif (player.room_name == "Foyer"):
-        # foyer 
+            player.current_room = room['outside'].n_to.room_name
+            
+    elif (player.current_room == "Foyer"):
 
         if (user_input == 'w'):
             # player cannot travel west from the foyer 
             print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
             continue 
         elif (user_input == 's'):
-            player.room_name = room['foyer'].s_to.room_name
-            player.desc = room['foyer'].s_to.desc
+            player.current_room = room['foyer'].s_to.room_name 
         elif (user_input == 'n'):
-            player.room_name = room['foyer'].n_to.room_name
-            player.desc = room['foyer'].n_to.desc
+            player.current_room = room['foyer'].n_to.room_name
         elif (user_input == 'e'):
-            player.room_name = room['foyer'].e_to.room_name
-            player.desc = room['foyer'].e_to.desc
+            player.current_room = room['foyer'].e_to.room_name
 
-    elif (player.room_name == "Grand Overlook"):
-        # overlook 
+    elif (player.current_room == "Grand Overlook"):
         
         if (user_input != 's'):
             # player can only go south when at overlook, so user must enter [s]
             print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
             continue 
         else:
-            player.room_name = room['overlook'].s_to.room_name
-            player.desc = room['overlook'].s_to.desc
+            player.current_room = room['overlook'].s_to.room_name
 
-    elif (player.room_name == "Narrow Passage"):
-        # narrow 
+    elif (player.current_room == "Narrow Passage"):
 
         if (user_input == 's' or user_input == 'e'):
             # player cannot travel south or east from the narrow passage  
             print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
             continue 
         elif (user_input == 'n'):
-            player.room_name = room['narrow'].n_to.room_name
-            player.desc = room['narrow'].n_to.desc
+            player.current_room = room['narrow'].n_to.room_name
         elif (user_input == 'w'):
-            player.room_name = room['narrow'].w_to.room_name
-            player.desc = room['narrow'].w_to.desc
+            player.current_room = room['narrow'].w_to.room_name
 
-    elif (player.room_name == "Treasure Chamber"):
+    elif (player.current_room == "Treasure Chamber"):
         # treasure 
         
         if (user_input != 's'):
@@ -191,7 +185,16 @@ while (not gameOver):
             print(f"\nLooks like you cannot travel [{user_input}]. Try a different direction.")
             continue 
         else:
-            player.room_name = room['treasure'].s_to.room_name
-            player.desc = rroom['treasure'].s_to.desc
-
+            player.current_room = room['treasure'].s_to.room_name
+        
     print(f"\n{player}")
+
+    # prints the room description for the player based on the player's current room name 
+    for key in room: 
+        if key in player.current_room.lower():
+            print(f"\n{room[key]}")
+            print(f"\n{player.current_room} has the following items:")
+
+            # prints the items in the room 
+            for item in room[key].room_items: 
+                print(item)
